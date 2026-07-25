@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barath M A — Full-Stack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#14161c;
+    --surface:#1b1e27;
+    --surface-2:#21252f;
+    --text:#f2f0eb;
+    --text-dim:#a3a8b5;
+    --rule:#2c303c;
+    --amber:#eeaa66;
+    --green:#8ccbac;
+    --blue:#8ab0de;
+    --pink:#d29ade;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    line-height:1.65;
+    font-size:16px;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--amber); color:#14161c;}
+  a{color:inherit;}
+  code, .mono{font-family:'JetBrains Mono', monospace;}
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(20,22,28,0.94);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--rule);
+    display:flex; align-items:center;
+    overflow-x:auto;
+  }
+  .topbar .brand{
+    display:flex; align-items:center; gap:9px;
+    padding:0 20px; height:56px;
+    font-family:'JetBrains Mono', monospace;
+    font-weight:700; font-size:14px; color:var(--green);
+    border-right:1px solid var(--rule);
+    white-space:nowrap;
+  }
+  .brand .dot{width:8px; height:8px; border-radius:50%; background:var(--amber);}
+  .tabs{display:flex; height:56px;}
+  .tab{
+    display:flex; align-items:center; gap:8px;
+    padding:0 20px; font-size:14px; color:var(--text-dim);
+    border-right:1px solid var(--rule);
+    cursor:pointer; white-space:nowrap;
+    transition:background .15s, color .15s;
+  }
+  .tab:hover{color:var(--text); background:var(--surface);}
+  .tab.active{color:var(--text); background:var(--surface-2); box-shadow:inset 0 -2px 0 var(--amber);}
+  .tab .ext{color:var(--blue); font-family:'JetBrains Mono', monospace; font-size:12.5px;}
+
+  /* ---------- shared containers ---------- */
+  .wrap{max-width:820px; margin:0 auto; padding:0 24px;}
+  section{padding:64px 0;}
+  section + section{border-top:1px solid var(--rule);}
+
+  h2.sec{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px; text-transform:uppercase; letter-spacing:.12em;
+    color:var(--amber); font-weight:700;
+    margin-bottom:6px;
+  }
+  h2.sec .hash{color:#4a4f5e; margin-right:6px;}
+  p.sec-sub{
+    font-family:'Inter', sans-serif;
+    color:var(--text-dim); font-size:16px; margin-bottom:28px;
+  }
+
+  /* ---------- hero ---------- */
+  .hero{padding-top:56px;}
+  .hero-frame{
+    background:var(--surface);
+    border:1px solid var(--rule);
+    border-radius:12px;
+    overflow:hidden;
+  }
+  .hero-titlebar{
+    display:flex; align-items:center; gap:8px;
+    padding:12px 18px; border-bottom:1px solid var(--rule);
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px; color:var(--text-dim);
+  }
+  .hero-titlebar .dots{display:flex; gap:6px; margin-right:6px;}
+  .hero-titlebar .dots span{width:11px; height:11px; border-radius:50%; display:inline-block;}
+  .hero-titlebar .dots span:nth-child(1){background:#e8686870;}
+  .hero-titlebar .dots span:nth-child(2){background:#e8c46870;}
+  .hero-titlebar .dots span:nth-child(3){background:#7fbf9e70;}
+  .hero-body{padding:34px 32px 38px; font-family:'JetBrains Mono', monospace; font-size:16px; line-height:1.85;}
+  #typewriter{white-space:pre-wrap;}
+  .cursor{display:inline-block; width:9px; height:18px; background:var(--amber); vertical-align:middle; animation:blink 1s step-end infinite;}
+  @keyframes blink{50%{opacity:0;}}
+  @media (prefers-reduced-motion:reduce){.cursor{animation:none;}}
+
+  .kw{color:var(--blue);}
+  .str{color:var(--green);}
+  .cmt{color:var(--text-dim);}
+  .fn{color:var(--pink);}
+  .punc{color:var(--text-dim);}
+
+  .hero-meta{
+    display:flex; flex-wrap:wrap; gap:10px;
+    margin-top:24px;
+  }
+  .pill{
+    font-size:13px; color:var(--text-dim);
+    border:1px solid var(--rule); border-radius:20px;
+    padding:8px 14px;
+  }
+  .pill b{color:var(--text);}
+  .lede{
+    margin-top:24px; font-size:16px; color:var(--text-dim); max-width:60ch;
+  }
+
+  /* ---------- skills ---------- */
+  .skill-grid{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+    gap:16px;
+  }
+  .skill-card{
+    background:var(--surface); border:1px solid var(--rule); border-radius:10px;
+    padding:20px 22px;
+  }
+  .skill-card h3{
+    font-family:'JetBrains Mono', monospace; font-size:12.5px;
+    color:var(--text-dim); text-transform:uppercase; letter-spacing:.08em;
+    margin-bottom:12px;
+  }
+  .tag-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .tag{
+    background:var(--surface-2); border:1px solid var(--rule);
+    border-radius:6px; padding:5px 11px; font-size:13.5px; color:var(--text);
+  }
+  .soft-list{list-style:none; margin-top:2px;}
+  .soft-list li{color:var(--text); font-size:14.5px; margin:8px 0; padding-left:20px; position:relative;}
+  .soft-list li::before{content:"→"; color:var(--green); position:absolute; left:0;}
+
+  /* ---------- projects ---------- */
+  .repo-card{
+    background:var(--surface); border:1px solid var(--rule); border-radius:10px;
+    padding:24px 26px; margin-bottom:18px;
+  }
+  .repo-head{display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; margin-bottom:14px;}
+  .repo-name{color:var(--text); font-weight:700; font-size:17px; font-family:'JetBrains Mono', monospace;}
+  .repo-date{color:var(--text-dim); font-size:12.5px; font-family:'JetBrains Mono', monospace;}
+  .commit{
+    display:flex; gap:12px; margin-top:10px; font-size:15px; color:var(--text-dim); line-height:1.55;
+  }
+  .commit .hash{color:#4a4f5e; flex:0 0 auto; font-family:'JetBrains Mono', monospace; font-size:13px; padding-top:2px;}
+  .badge-row{margin-top:16px; display:flex; flex-wrap:wrap; gap:8px;}
+  .badge{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px; color:var(--bg); background:var(--green);
+    border-radius:5px; padding:4px 10px; font-weight:700;
+  }
+  .badge.alt{background:var(--amber);}
+  .badge.blue{background:var(--blue);}
+
+  /* ---------- log / timeline ---------- */
+  .log-entry{
+    display:flex; gap:20px; padding:16px 0; border-bottom:1px solid var(--rule);
+  }
+  .log-entry:last-child{border-bottom:none;}
+  .log-date{
+    flex:0 0 130px; color:var(--amber); font-size:13px; padding-top:2px;
+    font-family:'JetBrains Mono', monospace;
+  }
+  .log-body{font-size:15px;}
+  .log-body b{color:var(--text); font-size:15.5px;}
+  .log-body p{color:var(--text-dim); margin-top:4px; font-size:14px;}
+
+  /* ---------- contact / terminal ---------- */
+  .terminal{
+    background:#101218; border:1px solid var(--rule); border-radius:10px;
+    padding:26px 28px; font-family:'JetBrains Mono', monospace; font-size:14px;
+  }
+  .prompt{color:var(--green);}
+  .term-line{margin:2px 0;}
+  .term-out{color:var(--text-dim); margin-left:20px; line-height:1.9;}
+  .btn-row{display:flex; flex-wrap:wrap; gap:12px; margin-top:22px;}
+  .btn{
+    border:1px solid var(--rule); border-radius:8px; padding:11px 18px;
+    font-size:13.5px; color:var(--text); text-decoration:none;
+    transition:border-color .15s, color .15s, transform .15s;
+    background:var(--surface); font-family:'Inter', sans-serif; font-weight:500;
+  }
+  .btn:hover{border-color:var(--amber); color:var(--amber); transform:translateY(-1px);}
+
+  footer{
+    text-align:center; padding:36px 20px 52px; color:#4a4f5e; font-size:12.5px;
+    font-family:'JetBrains Mono', monospace;
+  }
+
+  @media (max-width:640px){
+    section{padding:44px 0;}
+    .hero-body{font-size:14px; padding:24px 20px 28px;}
+    .repo-card{padding:20px;}
+    .log-entry{flex-direction:column; gap:4px;}
+    .log-date{flex:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="topbar" id="topbar">
+  <div class="brand"><span class="dot"></span>BarathMA/</div>
+  <div class="tabs">
+    <div class="tab" data-target="#objective">Objective<span class="ext">.md</span></div>
+    <div class="tab" data-target="#skills">Skills<span class="ext">.json</span></div>
+    <div class="tab" data-target="#projects">Projects<span class="ext">/</span></div>
+    <div class="tab" data-target="#internship">Internship<span class="ext">.log</span></div>
+    <div class="tab" data-target="#education">Education<span class="ext">.log</span></div>
+    <div class="tab" data-target="#certificates">Certificates<span class="ext">.log</span></div>
+    <div class="tab" data-target="#achievements">Achievements<span class="ext">.log</span></div>
+    <div class="tab" data-target="#contact">Contact<span class="ext">.sh</span></div>
+  </div>
+</nav>
+
+<section class="hero" id="objective">
+  <div class="wrap">
+    <div class="hero-frame">
+      <div class="hero-titlebar">
+        <span class="dots"><span></span><span></span><span></span></span>
+        BarathMA.java
+      </div>
+      <div class="hero-body"><span id="typewriter"></span><span class="cursor"></span></div>
+    </div>
+    <p class="lede" style="margin-top:18px;">In plain words: I'm a full-stack web developer who builds apps using Java, Spring Boot, and React — and I'm currently studying Information Technology.</p>
+    <div class="hero-meta">
+      <span class="pill">📍 Pollachi, Tamil Nadu</span>
+      <span class="pill"><b>B.Tech IT</b> · Dr. Mahalingam College of Engg &amp; Tech · Exp. 2027</span>
+      <span class="pill"><b>CGPA</b> 8.57</span>
+      <span class="pill"><b>LeetCode</b> 300+ solved</span>
+    </div>
+    <p class="lede">I use Java and web development to build simple, efficient applications — currently focused on full-stack work with React on the frontend and Spring Boot on the backend.</p>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <h2 class="sec"><span class="hash">#</span>skills.json</h2>
+    <p class="sec-sub">What I know how to work with</p>
+    <div class="skill-grid">
+      <div class="skill-card">
+        <h3>Languages</h3>
+        <div class="tag-row"><span class="tag">Java</span><span class="tag">C</span></div>
+      </div>
+      <div class="skill-card">
+        <h3>Frontend</h3>
+        <div class="tag-row"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">React JS</span></div>
+      </div>
+      <div class="skill-card">
+        <h3>Backend &amp; Database</h3>
+        <div class="tag-row"><span class="tag">Spring Boot</span><span class="tag">MySQL</span></div>
+      </div>
+      <div class="skill-card">
+        <h3>Tools</h3>
+        <div class="tag-row"><span class="tag">Git</span><span class="tag">VS Code</span><span class="tag">IntelliJ</span><span class="tag">Postman</span></div>
+      </div>
+      <div class="skill-card" style="grid-column:1 / -1;">
+        <h3>Soft Skills</h3>
+        <ul class="soft-list">
+          <li>Logical thinking</li>
+          <li>Patience in debugging and problem solving</li>
+          <li>Self-learning ability</li>
+          <li>Clear technical communication</li>
+          <li>Consistency in practice and improvement</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <h2 class="sec"><span class="hash">#</span>projects/</h2>
+    <p class="sec-sub">Things I've built</p>
+
+    <div class="repo-card">
+      <div class="repo-head">
+        <span class="repo-name">📁 shoppingmart-web-app</span>
+        <span class="repo-date">Jun 2026 – Jul 2026</span>
+      </div>
+      <div class="commit"><span class="hash">a1b2c3d</span><span>Built a full-stack e-commerce site with login, cart, wishlist, orders and user profile.</span></div>
+      <div class="commit"><span class="hash">e4f5a6b</span><span>Added secure auth with JWT, OTP email verification, and Google reCAPTCHA; connected frontend and backend via REST APIs.</span></div>
+      <div class="badge-row">
+        <span class="badge">React</span><span class="badge alt">Spring Boot</span><span class="badge blue">MySQL</span><span class="badge">JWT</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-head">
+        <span class="repo-name">📁 ai-reply-generator-extension</span>
+        <span class="repo-date">Jan 2026 – Feb 2026</span>
+      </div>
+      <div class="commit"><span class="hash">7c9d1e2</span><span>Built a full-stack web app that generates AI-based email replies from user input.</span></div>
+      <div class="commit"><span class="hash">2b4f8a0</span><span>Designed a Chrome extension that integrates with Gmail to insert generated replies into the compose window.</span></div>
+      <div class="badge-row">
+        <span class="badge">Chrome Extension</span><span class="badge alt">JavaScript</span><span class="badge blue">AI / API</span>
+      </div>
+    </div>
+
+    <div class="repo-card">
+      <div class="repo-head">
+        <span class="repo-name">📁 jwt-smart-todo-app</span>
+        <span class="repo-date">Apr 2026 – May 2026</span>
+      </div>
+      <div class="commit"><span class="hash">9f0a3c5</span><span>Built a full-stack Smart Todo app with JWT authentication using Spring Boot and React.</span></div>
+      <div class="commit"><span class="hash">d6e2b71</span><span>Designed secure, user-specific task management with priority filtering and progress tracking.</span></div>
+      <div class="badge-row">
+        <span class="badge">Spring Boot</span><span class="badge alt">React</span><span class="badge blue">JWT</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="internship">
+  <div class="wrap">
+    <h2 class="sec"><span class="hash">#</span>internship.log</h2>
+    <p class="sec-sub">Where I've worked</p>
+
+    <div class="log-entry">
+      <div class="log-date">Jun 2025</div>
+      <div class="log-body">
+        <b>Web Development Intern</b> — NEHA SOLUTIONS Pvt. Ltd, Pollachi
+        <p>Built responsive pages with HTML, CSS and JavaScript; collaborated with developers to build and test features for client-based websites.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <h2 class="sec"><span class="hash">#</span>education.log</h2>
+    <p class="sec-sub">My academic background</p>
+
+    <div class="log-entry">
+      <div class="log-date">2023 – 2027</div>
+      <div class="log-body"><b>B.Tech, Information Technology</b> — Dr. Mahalingam College of Engineering and Technology, Pollachi
+        <p>CGPA 8.57, expected graduation 2027.</p>
+      </div>
+    </div>
+    <div class="log-entry">
+      <div class="log-date">Apr 2023</div>
+      <div class="log-body"><b>HSC</b> — GRG Matric Higher Secondary School, Peelamedu, Coimbatore
+        <p>86.66%</p>
+      </div>
+    </div>
+    <div class="log-entry">
+      <div class="log-date">Mar 2021</div>
+      <div class="log-body"><b>SSLC</b> — GRG Memorial Higher Secondary School, Vazhaithottam, The Nilgiris</div>
+    </div>
+  </div>
+</section>
+
+<section id="certificates">
+  <div class="wrap">
+    <h2 class="sec"><span class="hash">#</span>certificates.log</h2>
+    <p class="sec-sub">Courses and exams I've completed</p>
+
+    <div class="log-entry">
+      <div class="log-date">Jan 2024</div>
+      <div class="log-body"><b>Linguaskill — Certified Level B1</b></div>
+    </div>
+  </div>
+</section>
+
+<section id="achievements">
+  <div class="wrap">
+    <h2 class="sec"><span class="hash">#</span>achievements.log</h2>
+    <p class="sec-sub">Things I'm proud of</p>
+
+    <div class="log-entry">
+      <div class="log-date">Mar 2025</div>
+      <div class="log-body"><b>Won Coding Contest</b> — Technofest 2025, Dr. Mahalingam College of Engineering &amp; Technology</div>
+    </div>
+    <div class="log-entry">
+      <div class="log-date">Ongoing</div>
+      <div class="log-body"><b>300+ problems solved on LeetCode</b></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <h2 class="sec"><span class="hash">#</span>contact.sh</h2>
+    <p class="sec-sub">How to reach me</p>
+    <div class="terminal">
+      <div class="term-line"><span class="prompt">$</span> whoami</div>
+      <div class="term-out">Barath M A — Full-Stack Developer (Java · Spring Boot · React)</div>
+      <div class="term-line" style="margin-top:14px;"><span class="prompt">$</span> cat contact.txt</div>
+      <div class="term-out">
+        email&nbsp;&nbsp;&nbsp;&nbsp;barath5807@gmail.com<br>
+        phone&nbsp;&nbsp;&nbsp;&nbsp;9344251768<br>
+        leetcode&nbsp;leetcode.com/u/mab08<br>
+        linkedin&nbsp;linkedin.com/in/barath-m-a<br>
+        github&nbsp;&nbsp;&nbsp;github.com/mab0804
+      </div>
+      <div class="btn-row">
+        <a class="btn" href="mailto:barath5807@gmail.com">✉ Email me</a>
+        <a class="btn" href="https://github.com/mab0804" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="https://linkedin.com/in/barath-m-a/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="https://leetcode.com/u/mab08/" target="_blank" rel="noopener">LeetCode</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>compiled from BarathMA.resume · built for the web</footer>
+
+<script>
+  const codeLines = [
+    {t:'kw', s:'public class '}, {t:'fn', s:'BarathMA'}, {t:'punc', s:' {\n\n'},
+    {t:'cmt', s:'    // Full-Stack Developer — Java · Spring Boot · React JS\n\n'},
+    {t:'kw', s:'    String '}, {t:'', s:'location'}, {t:'punc', s:' = '}, {t:'str', s:'"Pollachi, Tamil Nadu"'}, {t:'punc', s:';\n'},
+    {t:'kw', s:'    String '}, {t:'', s:'status'}, {t:'punc', s:' = '}, {t:'str', s:'"B.Tech IT \'27, CGPA 8.57"'}, {t:'punc', s:';\n\n'},
+    {t:'kw', s:'    public static void '}, {t:'fn', s:'main'}, {t:'punc', s:'('}, {t:'kw', s:'String[] '}, {t:'', s:'args'}, {t:'punc', s:') {\n'},
+    {t:'', s:'        System.out.println'}, {t:'punc', s:'('}, {t:'str', s:'"Building simple, efficient solutions."'}, {t:'punc', s:');\n'},
+    {t:'punc', s:'    }\n}'}
+  ];
+
+  const target = document.getElementById('typewriter');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function renderFull(){
+    target.innerHTML = codeLines.map(c => c.t ? `<span class="${c.t}">${c.s}</span>` : c.s).join('');
+  }
+
+  if(prefersReduced){
+    renderFull();
+  } else {
+    let flat = [];
+    codeLines.forEach(c => { for(const ch of c.s) flat.push({ch, t:c.t}); });
+    let i = 0;
+    let openSpan = null;
+    function step(){
+      if(i >= flat.length){ return; }
+      const {ch, t} = flat[i];
+      const prevT = i > 0 ? flat[i-1].t : null;
+      if(t !== prevT){
+        openSpan = document.createElement('span');
+        if(t) openSpan.className = t;
+        target.appendChild(openSpan);
+      }
+      openSpan.appendChild(document.createTextNode(ch));
+      i++;
+      setTimeout(step, ch === '\n' ? 70 : 12);
+    }
+    step();
+  }
+
+  const tabs = document.querySelectorAll('.tab');
+  const sections = ['objective','skills','projects','internship','education','certificates','achievements','contact'].map(id => document.getElementById(id));
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        const id = '#' + entry.target.id;
+        tabs.forEach(tab => tab.classList.toggle('active', tab.dataset.target === id));
+      }
+    });
+  }, {rootMargin: '-40% 0px -50% 0px'});
+  sections.forEach(s => s && obs.observe(s));
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelector(tab.dataset.target).scrollIntoView({behavior: prefersReduced ? 'auto' : 'smooth'});
+    });
+  });
+</script>
+
+</body>
+</html>
